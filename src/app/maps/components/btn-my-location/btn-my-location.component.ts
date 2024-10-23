@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { MapService } from '@services/map.service';
+import { PlacesService } from '@services/places.service';
 
 @Component({
   selector: 'app-btn-my-location',
@@ -16,8 +18,13 @@ import { Component } from '@angular/core';
 })
 export class BtnMyLocationComponent {
 
+  private placesSrv = inject(PlacesService);
+  private mapSrv = inject(MapService);
+
   goToMyLocation(): void {
-    console.log('go to my location');
+    if(!this.placesSrv.isUserLocationReady){ throw new Error('User location is not ready'); }
+    if(!this.mapSrv.isMapReady){ throw new Error('Map is not ready'); }
+    this.mapSrv.flyTo(this.placesSrv.userLocation!);
   }
 
 }

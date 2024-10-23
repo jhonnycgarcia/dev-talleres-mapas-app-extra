@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { MapService } from '@services/map.service';
 import { PlacesService } from '@services/places.service';
 
 import { Map, Popup, Marker } from 'mapbox-gl'; // or "const mapboxgl = require('mapbox-gl');"
@@ -14,20 +15,22 @@ import { Map, Popup, Marker } from 'mapbox-gl'; // or "const mapboxgl = require(
 export class MapViewComponent implements AfterViewInit {
 
   private placesSrv = inject(PlacesService);
+  private mapSrv = inject(MapService);
 
   @ViewChild('mapDiv')
   public mapDivElement!: ElementRef<HTMLDivElement>;
 
   ngAfterViewInit(): void {
-    if(!this.placesSrv.userLocation){
-      throw new Error('User location is not ready');
-    }
+    if(!this.placesSrv.userLocation){ throw new Error('User location is not ready'); }
+
     const map = new Map({
       container: this.mapDivElement.nativeElement, // container ID
       style: 'mapbox://styles/mapbox/streets-v12', // style URL
       center: this.placesSrv.userLocation, // starting position [lng, lat]
       zoom: 14, // starting zoom
     });
+
+    this.mapSrv.setMap(map);
 
     const popup = new Popup()
       .setHTML(`
