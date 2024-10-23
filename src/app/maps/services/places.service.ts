@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Feature, PlacesResponse } from '../interfaces/places';
+import { PlacesApiClient } from '../api';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class PlacesService {
   public places: Feature[] = [];
 
   constructor(
-    private http: HttpClient
+    // private http: HttpClient
+    private placesApi: PlacesApiClient
   ) {
     this.getUserLocation();
   }
@@ -41,16 +43,20 @@ export class PlacesService {
   getPlacesByQuery(query: string = '') {
 
     this.isLoadingPlaces = true;
-    const params = new HttpParams()
-      .set('q', query)
-      .set('country', 'co')
-      .set('proximity', this.userLocation!.join(','))
-      .set('language', 'es')
-      .set('access_token', environment.MAPBOX_API_KEY);
+    // const params = new HttpParams()
+    //   .set('q', query)
+    //   .set('country', 'co')
+    //   .set('proximity', this.userLocation!.join(','))
+    //   .set('language', 'es')
+    //   .set('access_token', environment.MAPBOX_API_KEY);
 
-    const url = `https://api.mapbox.com/search/geocode/v6/forward`;
+    // const url = `https://api.mapbox.com/search/geocode/v6/forward?${params.toString()}`;
 
-    this.http.get<PlacesResponse>(url, { params })
+    this.placesApi.get<PlacesResponse>(`?q=${query}`, {
+      params: {
+        proximity: this.userLocation!.join(','),
+      }
+    })
       .subscribe((res) => {
         this.isLoadingPlaces = false;
         this.places = res.features;
