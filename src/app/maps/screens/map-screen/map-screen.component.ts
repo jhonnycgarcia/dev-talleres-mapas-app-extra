@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { PlacesService } from '@services/places.service';
 
 @Component({
   standalone: true,
@@ -8,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './map-screen.component.css'
 })
 export class MapScreenComponent {
+
+  private placesSrv = inject(PlacesService);
 
 }
