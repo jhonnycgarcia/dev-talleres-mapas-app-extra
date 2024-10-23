@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class PlacesService {
 
-  public userLocation: [number, number] | undefined = undefined;
+  public userLocation?: [number, number];
 
   constructor() {
     this.getUserLocation();
