@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
+import { PlacesService } from '@services/places.service';
+
 import { SearchResultsComponent } from '../search-results/search-results.component';
 
 @Component({
@@ -11,11 +14,12 @@ import { SearchResultsComponent } from '../search-results/search-results.compone
 export class SearchBarComponent {
 
   private debounceTimer?: NodeJS.Timeout;
+  private placesSrv = inject(PlacesService);
 
   onQueryChange(query: string = ''): void {
     if(this.debounceTimer){ clearTimeout(this.debounceTimer); }
     this.debounceTimer = setTimeout(() => {
-      console.log('query', query);
+      this.placesSrv.getPlacesByQuery(query);
     }, 350);
   }
 
