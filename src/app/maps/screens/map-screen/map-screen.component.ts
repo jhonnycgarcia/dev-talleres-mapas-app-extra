@@ -3,13 +3,17 @@ import { PlacesService } from '@services/places.service';
 import { LoadingComponent } from '../../components/loading/loading.component';
 import { CommonModule } from '@angular/common';
 import { MapViewComponent } from "../../components/map-view/map-view.component";
+import { AngularLogoComponent } from "../../components/angular-logo/angular-logo.component";
+import { BtnMyLocationComponent } from '../../components/btn-my-location/btn-my-location.component';
 
 @Component({
   standalone: true,
   imports: [
     CommonModule,
     LoadingComponent,
-    MapViewComponent
+    MapViewComponent,
+    AngularLogoComponent,
+    BtnMyLocationComponent,
 ],
   selector: 'app-map-screen',
   templateUrl: './map-screen.component.html',
