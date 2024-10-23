@@ -1,14 +1,34 @@
-<div class="alert alert-primary mt-2 text-center" role="alert">
-  <h6>Cargando</h6>
-  <span>Espere por favor...</span>
-</div>
+@if(!isLoadingPlaces) {
 
-<ul class="list-group mt-2">
-  <li class="list-group-item list-group-item-action pointer">
-    <h6>Lugar</h6>
-    <p>Lorem ipsum dolor sit amet.</p>
-    <button class="btn btn-sm btn-outline-primary">
-      Direcciones
-    </button>
-  </li>
-</ul>
+  <ul class="list-group mt-2">
+
+    @for (place of places; track place.id) {
+      <li
+        class="list-group-item list-group-item-action pointer"
+        [ngClass]="{'active': place.id === selectedId}"
+        (click)="flyTo(place)"
+      >
+        <h6>{{ place.properties.name }}</h6>
+        <p>{{ place.properties.full_address }}</p>
+        <button
+          class="btn btn-sm btn-outline-primary"
+          [ngClass]="place.id === selectedId ? 'btn-outline-light' : 'btn-outline-primary'"
+        >
+          Direcciones
+        </button>
+      </li>
+    }
+
+
+  </ul>
+
+} @else {
+
+  <div class="alert alert-primary mt-2 text-center" role="alert">
+    <h6>Cargando</h6>
+    <span>Espere por favor...</span>
+  </div>
+
+}
+
+

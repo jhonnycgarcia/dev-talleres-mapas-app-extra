@@ -42,6 +42,12 @@ export class PlacesService {
 
   getPlacesByQuery(query: string = '') {
 
+    if(query.length == 0) {
+      this.places = [];
+      this.isLoadingPlaces = false;
+      return;
+    }
+
     this.isLoadingPlaces = true;
     // const params = new HttpParams()
     //   .set('q', query)
