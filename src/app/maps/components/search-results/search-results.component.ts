@@ -37,6 +37,8 @@ export class SearchResultsComponent {
     const start = this.placesSrv.userLocation;
     const end = place.geometry.coordinates as [number, number];
     this.mapSrv.getRouteBetweenPoints(start, end);
+
+    this.placesSrv.deletePlaces();
   }
 
 }
