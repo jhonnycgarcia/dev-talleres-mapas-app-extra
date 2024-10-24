@@ -32,4 +32,11 @@ export class SearchResultsComponent {
     this.mapSrv.flyTo([lng, lat]);
   }
 
+  getDirections(place: Feature): void {
+    if(!this.placesSrv.userLocation){ throw new Error('User location is not ready'); }
+    const start = this.placesSrv.userLocation;
+    const end = place.geometry.coordinates as [number, number];
+    this.mapSrv.getRouteBetweenPoints(start, end);
+  }
+
 }
